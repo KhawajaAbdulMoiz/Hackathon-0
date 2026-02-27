@@ -1,0 +1,31 @@
+2026-02-20 02:00:27 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 02:00:27 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 02:00:27 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Logs
+2026-02-20 02:00:27 | INFO     | 🟢 Vault Watcher started
+2026-02-20 02:00:27 | INFO     | 📁 Monitoring: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 02:00:27 | INFO     | 📤 Destination: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 02:00:27 | INFO     | Press Ctrl+C to stop...
+2026-02-20 02:00:43 | INFO     | Received shutdown signal
+2026-02-20 02:00:43 | INFO     | 🔴 Vault Watcher stopped
+2026-02-20 02:03:48 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 02:03:48 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 02:03:48 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Logs
+2026-02-20 02:03:48 | INFO     | 🟢 Vault Watcher started
+2026-02-20 02:03:48 | INFO     | 📁 Monitoring: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 02:03:48 | INFO     | 📤 Destination: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 02:03:48 | INFO     | Press Ctrl+C to stop...
+2026-02-20 02:05:24 | INFO     | 📥 New file detected: task-summarize.txt
+2026-02-20 02:05:24 | INFO     | ✅ Moved to: 2026-02-20_02-05-24_task-summarize.txt
+2026-02-20 02:06:49 | INFO     | Received shutdown signal
+2026-02-20 02:06:49 | INFO     | 🔴 Vault Watcher stopped
+2026-02-20 15:08:38 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 15:08:38 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 15:08:38 | DEBUG    | Directory verified: E:\Hackathon 0\AI_Employee_Vault\Logs
+2026-02-20 15:08:38 | INFO     | 🟢 Vault Watcher started
+2026-02-20 15:08:38 | INFO     | 📁 Monitoring: E:\Hackathon 0\AI_Employee_Vault\Inbox
+2026-02-20 15:08:38 | INFO     | 📤 Destination: E:\Hackathon 0\AI_Employee_Vault\Needs_Action
+2026-02-20 15:08:38 | INFO     | Press Ctrl+C to stop...
+2026-02-20 15:08:46 | INFO     | 📥 New file detected: task-summarize.txt
+2026-02-20 15:08:46 | INFO     | ✅ Moved to: 2026-02-20_15-08-46_task-summarize.txt
+2026-02-20 15:36:34 | INFO     | Received shutdown signal
+2026-02-20 15:36:34 | INFO     | 🔴 Vault Watcher stopped

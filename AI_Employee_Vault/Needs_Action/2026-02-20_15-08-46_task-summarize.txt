@@ -1,0 +1,3 @@
+Task: Summarize Q1 sales report
+Priority: High
+Details: Summarize the sales data and highlight key insights in a 1-page report.

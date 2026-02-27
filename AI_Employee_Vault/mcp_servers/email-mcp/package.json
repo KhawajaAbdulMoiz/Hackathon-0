@@ -1,0 +1,30 @@
+{
+  "name": "email-mcp-server",
+  "version": "1.0.0",
+  "description": "Email MCP Server for AI Employee Vault - Draft and send emails via Gmail API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js --test",
+    "draft": "node index.js --draft",
+    "send": "node index.js --send",
+    "list": "node index.js --list",
+    "inspect": "npx @modelcontextprotocol/inspector node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "email",
+    "gmail",
+    "ai-employee"
+  ],
+  "author": "AI Employee System",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "google-auth-library": "^9.0.0",
+    "googleapis": "^140.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
