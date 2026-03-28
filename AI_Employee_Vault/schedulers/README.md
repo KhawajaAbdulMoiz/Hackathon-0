@@ -1,24 +1,27 @@
-# Daily Scheduler - AI Employee Vault
+# Daily & Weekly Scheduler - AI Employee Vault
 
-Automated daily briefing generation for AI Employee system.
+Automated daily and weekly briefing generation for AI Employee system.
 
 ## Features
 
 | Feature | Description |
 |---------|-------------|
 | **Daily Briefing** | Generates summary from /Done files at 8AM daily |
+| **Weekly CEO Briefing** | Comprehensive audit with revenue, tasks, bottlenecks (Sunday 9AM) |
 | **Productivity Tracking** | Compares today vs yesterday completion |
-| **Recommendations** | Suggests actions based on vault state |
+| **Revenue Analysis** | Pattern matching for income/expenses/subscriptions |
+| **Bottleneck Detection** | Identifies system and workflow issues |
 | **Cross-Platform** | Works on Windows (PowerShell), Mac/Linux (Bash) |
 
 ---
 
 ## Files
 
-| File | Platform |
-|------|----------|
-| `daily_scheduler.sh` | Linux/Mac |
-| `daily_scheduler.ps1` | Windows |
+| File | Type | Platform |
+|------|------|----------|
+| `daily_scheduler.sh` | Daily | Linux/Mac |
+| `daily_scheduler.ps1` | Daily | Windows |
+| `weekly_scheduler.ps1` | Weekly | Windows |
 
 ---
 
@@ -283,4 +286,159 @@ Get-ScheduledTask | Where-Object {$_.TaskName -like "*AI Employee*"}
 
 ---
 
-*Daily Scheduler v1.0.0 • AI Employee Vault*
+## Weekly Scheduler (Gold Tier)
+
+### Overview
+
+The Weekly Scheduler runs every Sunday at 9:00 AM to generate a comprehensive CEO Briefing:
+
+- **Revenue Analysis**: Extracts income/expenses via pattern matching
+- **Task Metrics**: Compares this week vs last week completion
+- **Bottleneck Detection**: Identifies system and workflow issues
+- **Goals Tracking**: Progress against Business_Goals.md
+- **Suggestions**: AI-generated recommendations
+
+### Manual Testing
+
+#### Windows (PowerShell)
+```powershell
+cd "E:\Hackathon 0\AI_Employee_Vault"
+powershell -ExecutionPolicy Bypass -File schedulers\weekly_scheduler.ps1
+
+# Force run (any day)
+powershell -ExecutionPolicy Bypass -File schedulers\weekly_scheduler.ps1 -Force
+```
+
+#### Python Skill (Cross-Platform)
+```bash
+cd "E:\Hackathon 0\AI_Employee_Vault"
+
+# Run on Sunday (scheduled day)
+python skills\weekly_audit_briefer.py
+
+# Force run (any day)
+python skills\weekly_audit_briefer.py --force
+```
+
+### Scheduled Setup (Windows)
+
+#### Method 1: GUI Setup
+
+1. **Open Task Scheduler:**
+   - Press `Win + R`
+   - Type `taskschd.msc`
+   - Press Enter
+
+2. **Create Basic Task:**
+   - Click "Create Basic Task..." in right panel
+   - Name: `AI Employee Weekly Scheduler`
+   - Description: `Generates weekly CEO briefing with revenue and task analysis`
+
+3. **Set Trigger:**
+   - Select "Weekly"
+   - Start time: `9:00:00 AM`
+   - Days: Check "Sunday"
+   - Recur every: `1` weeks
+
+4. **Set Action:**
+   - Select "Start a program"
+   - Program/script: `powershell.exe`
+   - Add arguments: `-ExecutionPolicy Bypass -File "E:\Hackathon 0\AI_Employee_Vault\schedulers\weekly_scheduler.ps1"`
+   - Start in: `E:\Hackathon 0\AI_Employee_Vault\schedulers`
+
+5. **Finish and Test:**
+   - Click Finish
+   - Right-click task → "Run" to test
+
+#### Method 2: PowerShell Command
+
+```powershell
+# Create scheduled task via PowerShell
+$taskName = "AI Employee Weekly Scheduler"
+$scriptPath = "E:\Hackathon 0\AI_Employee_Vault\schedulers\weekly_scheduler.ps1"
+$startTime = "9:00 AM"
+
+# Create trigger (weekly on Sunday at 9AM)
+$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $startTime
+
+# Create action (run PowerShell script)
+$action = New-ScheduledTaskAction -Execute "powershell.exe" `
+    -Argument "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
+    -WorkingDirectory "E:\Hackathon 0\AI_Employee_Vault\schedulers"
+
+# Create principal (run with highest privileges)
+$principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+
+# Register the task
+Register-ScheduledTask -TaskName $taskName `
+    -Trigger $trigger `
+    -Action $action `
+    -Principal $principal `
+    -Description "Generates weekly CEO briefing from AI Employee vault data"
+
+# Verify
+Get-ScheduledTask -TaskName $taskName
+
+# Test run
+Start-ScheduledTask -TaskName $taskName
+```
+
+### Output
+
+#### CEO Weekly Briefing File
+
+Location: `/Briefings/ceo_briefing_[date].md`
+
+```markdown
+# 📊 CEO Weekly Briefing
+
+**Week:** 2026-03-17 to 2026-03-23
+**Generated:** 2026-03-23 09:00:00
+**Status:** 🟢 Complete
+
+---
+
+## 📈 Executive Summary
+
+| Metric | Value | Trend |
+|--------|-------|-------|
+| **Tasks Completed** | 15 | 📈 Up |
+| **Revenue** | $4,048.00 | — |
+| **Expenses** | $500.00 | — |
+| **Net Profit** | $3,548.00 | 87.6% margin |
+| **Pending Approvals** | 2 | — |
+
+---
+
+## 💰 Revenue Analysis
+...
+```
+
+### Data Sources
+
+| Source | Purpose |
+|--------|---------|
+| `/Done` | Task completion metrics |
+| `/Logs` | Revenue/expense extraction, error detection |
+| `Company_Handbook.md` | Operating guidelines reference |
+| `Business_Goals.md` | Goal progress tracking |
+
+### Pattern Matching
+
+The Weekly Audit Briefer uses regex patterns to extract financial data:
+
+**Revenue Patterns:**
+- `revenue: $X,XXX.XX`
+- `payment received: $X,XXX.XX`
+- `income: $X,XXX.XX`
+- `$X,XXX.XX received/earned/collected`
+
+**Expense Patterns:**
+- `expense: $X,XXX.XX`
+- `cost: $X,XXX.XX`
+- `subscription: $X,XXX.XX`
+- `$X,XXX.XX spent/paid`
+
+---
+
+*Daily & Weekly Scheduler v1.0.0 • AI Employee Vault*

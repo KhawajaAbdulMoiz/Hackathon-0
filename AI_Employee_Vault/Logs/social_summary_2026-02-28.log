@@ -1,0 +1,9 @@
+2026-02-28 03:20:32 | INFO     | ============================================================
+2026-02-28 03:20:32 | INFO     | SOCIAL SUMMARY GENERATOR - STARTING
+2026-02-28 03:20:32 | INFO     | ============================================================
+2026-02-28 03:20:32 | INFO     | Scanning 1 files in Needs_Action
+2026-02-28 03:20:32 | INFO     | Found 1 social media messages
+2026-02-28 03:20:32 | INFO     | Processing: test_facebook_sales_message.md
+2026-02-28 03:20:32 | INFO     | Generating summary for test_facebook_sales_message.md
+2026-02-28 03:20:32 | INFO     | Draft saved: facebook_draft_facebook_2026-02-28_03-20-32.md
+2026-02-28 03:20:32 | INFO     | Approval request created: APPROVAL_social_response_2026-02-28_03-20-32.md

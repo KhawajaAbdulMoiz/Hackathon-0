@@ -61,6 +61,15 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+# Import error recovery utilities
+sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
+from error_recovery import (
+    ErrorRecoveryManager,
+    ErrorSeverity,
+    retry_with_backoff,
+    GracefulDegradation,
+)
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Configuration
 # ─────────────────────────────────────────────────────────────────────────────
@@ -122,9 +131,11 @@ class GmailService:
         self.logger = logger
         self.service: Optional[build] = None
         self.creds: Optional[Credentials] = None
+        self.error_recovery = ErrorRecoveryManager("gmail_watcher", logger)
 
+    @retry_with_backoff(max_retries=3, base_delay=1.0, max_delay=30.0, logger=None)
     def authenticate(self) -> bool:
-        """Authenticate with Gmail API."""
+        """Authenticate with Gmail API with retry support."""
         try:
             # Load existing credentials
             if TOKEN_FILE.exists():
@@ -159,14 +170,16 @@ class GmailService:
             # Build service
             self.service = build("gmail", "v1", credentials=self.creds)
             self.logger.info("Gmail service initialized")
+            self.error_recovery.record_success()
             return True
 
         except Exception as e:
+            self.error_recovery.record_error(e, ErrorSeverity.HIGH, {"step": "authenticate"}, retry=True)
             self.logger.exception(f"Authentication failed: {e}")
-            return False
+            raise  # Re-raise for retry decorator
 
     def get_unread_emails(self, max_results: int = 10) -> list[dict]:
-        """Fetch unread important emails."""
+        """Fetch unread important emails with error recovery."""
         if not self.service:
             self.logger.error("Gmail service not initialized")
             return []
@@ -185,6 +198,7 @@ class GmailService:
 
             messages = results.get("messages", [])
             self.logger.info(f"Found {len(messages)} matching emails")
+            self.error_recovery.record_success()
 
             emails = []
             for msg in messages:
@@ -195,14 +209,18 @@ class GmailService:
             return emails
 
         except HttpError as error:
+            self.error_recovery.record_error(error, ErrorSeverity.MEDIUM, {"step": "get_unread_emails"})
             self.logger.error(f"Gmail API error: {error}")
+            # Graceful degradation - return empty list and continue
             return []
         except Exception as e:
+            self.error_recovery.record_error(e, ErrorSeverity.MEDIUM, {"step": "get_unread_emails"})
             self.logger.exception(f"Error fetching emails: {e}")
             return []
 
+    @retry_with_backoff(max_retries=3, base_delay=0.5, max_delay=10.0, logger=None)
     def _get_email_details(self, message_id: str) -> Optional[dict]:
-        """Get detailed email information."""
+        """Get detailed email information with retry support."""
         try:
             message = (
                 self.service.users()
@@ -233,11 +251,13 @@ class GmailService:
             # Determine priority
             email_data["priority"] = self._determine_priority(email_data["subject"])
 
+            self.error_recovery.record_success()
             return email_data
 
         except Exception as e:
+            self.error_recovery.record_error(e, ErrorSeverity.LOW, {"message_id": message_id}, retry=True)
             self.logger.error(f"Error getting email details: {e}")
-            return None
+            raise  # Re-raise for retry decorator
 
     def _get_header(self, headers: list, name: str) -> str:
         """Extract header value by name."""

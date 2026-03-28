@@ -1,0 +1,77 @@
+{
+  "mcpServers": {
+    "email": {
+      "command": "node",
+      "args": ["mcp_servers/email-mcp/index.js"],
+      "cwd": ".",
+      "description": "Email MCP Server - Draft and send emails via Gmail API",
+      "capabilities": [
+        "draft_email",
+        "send_email",
+        "list_emails",
+        "mark_as_read"
+      ],
+      "config": {
+        "credentialsFile": "client_secret_1005799766116-6oj47f92vtmaacrvrfm0dgocjrkv8ukr.apps.googleusercontent.com.json",
+        "tokenFile": "token.json",
+        "draftsFolder": "Plans",
+        "logsFolder": "Logs"
+      },
+      "approval": {
+        "required": true,
+        "forCapabilities": ["send_email"],
+        "workflow": "draft → /Plans → approval → /Approved → send"
+      }
+    }
+  },
+  "vault": {
+    "root": "AI_Employee_Vault",
+    "folders": {
+      "inbox": "Inbox",
+      "needsAction": "Needs_Action",
+      "plans": "Plans",
+      "done": "Done",
+      "pendingApproval": "Pending_Approval",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "logs": "Logs",
+      "watchers": "Watchers",
+      "schedulers": "schedulers",
+      "mcpServers": "mcp_servers"
+    }
+  },
+  "workflow": {
+    "email": {
+      "draft": {
+        "step": 1,
+        "action": "Create draft via draft_email capability",
+        "output": "Saved to /Plans/email_draft_[date].md",
+        "status": "pending_approval"
+      },
+      "review": {
+        "step": 2,
+        "action": "Human reviews draft content",
+        "output": "Edit if needed, approve or reject",
+        "status": "in_review"
+      },
+      "approve": {
+        "step": 3,
+        "action": "Move file to /Approved folder",
+        "output": "Ready for sending",
+        "status": "approved"
+      },
+      "send": {
+        "step": 4,
+        "action": "Call send_email capability",
+        "output": "Email sent via Gmail API",
+        "status": "sent"
+      },
+      "archive": {
+        "step": 5,
+        "action": "Move draft file to /Done folder",
+        "output": "Task completed",
+        "status": "completed"
+      }
+    }
+  }
+}

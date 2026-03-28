@@ -1,0 +1,16 @@
+
+============================================================
+[2026-03-23 20:22:01] [MEDIUM] test_component
+============================================================
+Error Type: ValueError
+Message: Test error
+Context: {'test': True}
+
+Traceback:
+Traceback (most recent call last):
+  File "E:\Hackathon 0\AI_Employee_Vault\tools\error_recovery.py", line 670, in main
+    raise ValueError("Test error")
+ValueError: Test error
+
+============================================================
+

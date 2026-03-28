@@ -1,0 +1,25 @@
+2026-03-23 20:30:59 | INFO     | ============================================================
+2026-03-23 20:30:59 | INFO     | RALPH WIGGUM LOOP RUNNER - STARTING
+2026-03-23 20:30:59 | INFO     | Task: Process multi-step sales lead
+2026-03-23 20:30:59 | INFO     | Max Iterations: 20
+2026-03-23 20:30:59 | INFO     | ============================================================
+2026-03-23 20:30:59 | INFO     | Found 1 files in Needs_Action
+2026-03-23 20:30:59 | INFO     | Processing task: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:30:59 | INFO     | Classifying task: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:30:59 | DEBUG    | Audit entry logged: TASK_CLASSIFIED
+2026-03-23 20:30:59 | INFO     | Routed to: SOCIAL_AUTO
+2026-03-23 20:30:59 | DEBUG    | Audit entry logged: TASK_PROCESSED
+2026-03-23 20:30:59 | INFO     | Iteration 1: Executing step 1 - Draft social post
+2026-03-23 20:30:59 | INFO     | Drafting response for: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:30:59 | DEBUG    | Audit entry logged: FILE_CREATED
+2026-03-23 20:31:00 | INFO     | Iteration 2: Executing step 2 - Wait for approval
+2026-03-23 20:31:01 | INFO     | Iteration 3: Executing step 3 - Post to platform
+2026-03-23 20:31:01 | INFO     | Executing action: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:31:01 | DEBUG    | Audit entry logged: API_CALL
+2026-03-23 20:31:02 | INFO     | Iteration 4: Executing step 4 - Log action
+2026-03-23 20:31:02 | INFO     | Logging action: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:31:02 | DEBUG    | Audit entry logged: TASK_COMPLETED
+2026-03-23 20:31:03 | INFO     | Iteration 5: Executing step 5 - Archive to Done
+2026-03-23 20:31:03 | INFO     | Archiving task: task_test_multistep_sales_lead_1774279859
+2026-03-23 20:31:03 | DEBUG    | Audit entry logged: FILE_MOVED
+2026-03-23 20:31:03 | DEBUG    | Audit entry logged: FILE_CREATED
